@@ -1,0 +1,5 @@
+<resources>
+    <string name="instruction">Press the arrow button to get an activity!</string>
+    <string name="request_activity">Request Activity</string>
+    <string name="settings">Settings</string>
+</resources>
