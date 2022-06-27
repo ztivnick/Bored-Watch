@@ -14,7 +14,6 @@ import kotlinx.coroutines.async
 
 class MainActivity : Activity() {
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -23,7 +22,7 @@ class MainActivity : Activity() {
         val settingsButton = findViewById<ImageButton>(R.id.settingsButton)
 
         requestActivityButton.setOnClickListener {
-            CoroutineScope(Dispatchers.Main).async {
+             var deferred = CoroutineScope(Dispatchers.Main).async {
                 val result = RetrofitObject.retrofitInstance.getActivity()
                 if (result.body() != null) {
                     findViewById<TextView>(R.id.text).text = result.body()!!.activity

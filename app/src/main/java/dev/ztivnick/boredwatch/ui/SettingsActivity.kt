@@ -14,20 +14,20 @@ class SettingsActivity : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
 
-        var recyclerView: WearableRecyclerView = findViewById(R.id.settings_view)
+        val recyclerView: WearableRecyclerView = findViewById(R.id.settings_view)
         recyclerView.setHasFixedSize(true)
         recyclerView.isEdgeItemsCenteringEnabled = true
         recyclerView.layoutManager = WearableLinearLayoutManager(this)
 
-        var settingsItems: ArrayList<SettingsItem> = ArrayList()
+        val settingsItems: ArrayList<SettingsItem> = ArrayList()
         settingsItems.add(SettingsItem("Type"))
         settingsItems.add(SettingsItem("Participants"))
         settingsItems.add(SettingsItem("Max Price"))
         settingsItems.add(SettingsItem("Max Accessibility"))
 
         val onPressCallback = object : SettingsAdapter.AdapterCallback {
-            override fun onItemClicked(menuPosition: Int?) {
-                Log.d("CLICKED", menuPosition!!.toString())
+            override fun onItemClicked(settingsMenuPosition: Int?) {
+                Log.d("CLICKED", settingsMenuPosition!!.toString())
             }
         }
 
