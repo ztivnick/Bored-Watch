@@ -44,7 +44,8 @@ class SettingsAdapter(
             callback?.onItemClicked(holder.bindingAdapterPosition)
         }
         holder.settingsItemSwitch.setOnClickListener {
-            holder.settingsItemSeekBar.isVisible = holder.settingsItemSwitch.isChecked
+//            holder.settingsItemSeekBar.isVisible = holder.settingsItemSwitch.isChecked
+            holder.settingsItemNumPicker.isVisible = holder.settingsItemSwitch.isChecked
         }
     }
 
@@ -55,14 +56,16 @@ class SettingsAdapter(
     class RecyclerViewHolder(view: View) : ViewHolder(view) {
         var settingsItem: RelativeLayout
         var settingsItemText: TextView
-        var settingsItemSeekBar: SeekBar
+//        var settingsItemSeekBar: SeekBar
         var settingsItemSwitch: Switch
+        var settingsItemNumPicker: View
 
         init {
             settingsItem = view.findViewById(R.id.settings_item)
             settingsItemText = view.findViewById(R.id.settings_item_text)
-            settingsItemSeekBar = view.findViewById(R.id.settings_item_seekbar)
+//            settingsItemSeekBar = view.findViewById(R.id.settings_item_seekbar)
             settingsItemSwitch = view.findViewById(R.id.settings_item_switch)
+            settingsItemNumPicker = view.findViewById(R.id.settings_item_num_picker)
         }
     }
 

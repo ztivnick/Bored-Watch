@@ -17,16 +17,24 @@
         android:textSize="18sp"
         tools:ignore="HardcodedText" />
 
-    <SeekBar
-        android:id="@+id/settings_item_seekbar"
-        style="@style/Widget.AppCompat.SeekBar.Discrete"
+    <include
+        android:id="@+id/settings_item_num_picker"
+        layout="@layout/num_picker"
         android:layout_width="match_parent"
         android:layout_height="35dp"
         android:layout_below="@id/settings_item_text"
-        android:max="10"
-        android:min="1"
-        android:progress="0"
-        android:visibility="gone"/>
+        android:visibility="gone" />
+
+<!--    <SeekBar-->
+    <!--        android:id="@+id/settings_item_seekbar"-->
+    <!--        style="@style/Widget.AppCompat.SeekBar.Discrete"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="35dp"-->
+    <!--        android:layout_below="@id/settings_item_text"-->
+    <!--        android:max="10"-->
+    <!--        android:min="1"-->
+    <!--        android:progress="0"-->
+    <!--        android:visibility="gone" />-->
 
     <Switch
         android:id="@+id/settings_item_switch"
