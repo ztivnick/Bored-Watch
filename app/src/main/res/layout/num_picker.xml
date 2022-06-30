@@ -12,12 +12,11 @@
         android:layout_weight="1"
         android:background="@drawable/ic_arrow_left" />
 
-    <EditText
+    <TextView
         android:id="@+id/num_picker_number"
         android:layout_width="0sp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:inputType="number"
         android:text="0"
         android:textAlignment="center" />
 
