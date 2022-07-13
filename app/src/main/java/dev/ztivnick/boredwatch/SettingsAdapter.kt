@@ -1,5 +1,6 @@
 package dev.ztivnick.boredwatch
 
+import android.app.Activity
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -35,25 +36,50 @@ class SettingsAdapter(
 
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
         val dataProvider = dataSource[position]
+        val sharedPreferences = context.getSharedPreferences("WatchPrefs", Activity.MODE_PRIVATE)
+        val prefNumKey: String = when (position) {
+            0 -> "TYPE"
+            1 -> "PARTICIPANTS"
+            2 -> "MAX_PRICE"
+            3 -> "MAX_ACCESSIBILITY"
+            else -> ""
+        }
+        val prefToggleKey: String = prefNumKey + "_TOGGLE"
+
+        val prefNumValue = sharedPreferences.getInt(prefNumKey, 0)
+        val prefToggleValue = sharedPreferences.getBoolean(prefToggleKey, false)
+
+        // Set initial values
         holder.settingsItemText.text = dataProvider.text
+        holder.numPickerNum.text = prefNumValue.toString()
+        holder.settingsItemSwitch.isChecked = prefToggleValue
+        holder.settingsItemNumPicker.isVisible = prefToggleValue
+
         holder.settingsItem.setOnClickListener {
             callback?.onItemClicked(holder.bindingAdapterPosition)
         }
-        holder.settingsItemSwitch.setOnClickListener {
-            holder.settingsItemNumPicker.isVisible = holder.settingsItemSwitch.isChecked
-        }
-        holder.settingsItemSwitch.cancelDragAndDrop()
 
-        // Number picker listeners
+        holder.settingsItemSwitch.setOnClickListener {
+            val isChecked = holder.settingsItemSwitch.isChecked
+            holder.settingsItemNumPicker.isVisible = isChecked
+            sharedPreferences.edit().putBoolean(prefToggleKey, isChecked).apply()
+        }
+
         holder.numPickerDecrease.setOnClickListener {
-            val newNum = holder.numPickerNum.text.toString().toInt() - 1
-            holder.numPickerNum.text = newNum.toString()
+            sharedPreferences.edit().putInt(prefNumKey, setNum(false, holder.numPickerNum)).apply()
         }
         holder.numPickerIncrease.setOnClickListener {
-            val newNum = holder.numPickerNum.text.toString().toInt() + 1
-            holder.numPickerNum.text = newNum.toString()
+            sharedPreferences.edit().putInt(prefNumKey, setNum(true, holder.numPickerNum)).apply()
         }
+    }
 
+    private fun setNum(increase: Boolean, num: TextView): Int {
+        val currentNum = num.text.toString().toInt()
+        var newNum = 0
+        if ((currentNum >= 0 && increase) || currentNum > 0) newNum =
+            currentNum + (if (increase) 1 else -1)
+        num.text = newNum.toString()
+        return newNum
     }
 
     override fun getItemCount(): Int {
