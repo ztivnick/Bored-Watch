@@ -1,6 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/settings_item"
+    android:id="@+id/settings_item_num"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingStart="10dp"
@@ -9,39 +9,28 @@
     android:paddingBottom="5dp">
 
     <TextView
-        android:id="@+id/settings_item_text"
+        android:id="@+id/settings_item_num_title"
         android:layout_width="wrap_content"
         android:layout_height="25dp"
-        android:text="Settings Item"
+        android:text="Settings Item Num"
         android:textColor="#0096FF"
         android:textSize="18sp"
         tools:ignore="HardcodedText" />
 
     <include
         android:id="@+id/settings_item_num_picker"
-        layout="@layout/num_picker"
+        layout="@layout/settings_item_picker"
         android:layout_width="match_parent"
         android:layout_height="35dp"
-        android:layout_below="@id/settings_item_text"
+        android:layout_below="@id/settings_item_num_title"
         android:visibility="gone" />
-
-<!--    <SeekBar-->
-    <!--        android:id="@+id/settings_item_seekbar"-->
-    <!--        style="@style/Widget.AppCompat.SeekBar.Discrete"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="35dp"-->
-    <!--        android:layout_below="@id/settings_item_text"-->
-    <!--        android:max="10"-->
-    <!--        android:min="1"-->
-    <!--        android:progress="0"-->
-    <!--        android:visibility="gone" />-->
 
     <Switch
         android:id="@+id/settings_item_switch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_toEndOf="@id/settings_item_text"
+        android:layout_toEndOf="@id/settings_item_num_title"
         android:checked="false"
         tools:ignore="UseSwitchCompatOrMaterialXml" />
 </RelativeLayout>
