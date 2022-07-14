@@ -5,7 +5,10 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Button
+import android.widget.RelativeLayout
+import android.widget.Switch
+import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
@@ -26,7 +29,7 @@ class SettingsAdapter(
     private val context: Context
 
     override fun getItemViewType(position: Int): Int {
-        return if (position == 0) 0 else 1
+        return if (position == 0) TEXT_PICKER_VALUE else NUM_PICKER_VALUE
     }
 
     override fun onCreateViewHolder(
@@ -34,7 +37,7 @@ class SettingsAdapter(
         viewType: Int
     ): ViewHolder {
 
-        return if (viewType == 0) RecyclerViewHolderTextPicker(
+        return if (viewType == TEXT_PICKER_VALUE) RecyclerViewHolderTextPicker(
             LayoutInflater.from(parent.context)
                 .inflate(R.layout.settings_item_text, parent, false)
         )
@@ -55,12 +58,12 @@ class SettingsAdapter(
             else -> ""
         }
 
-        if (holder.itemViewType == 0) {
+        if (holder.itemViewType == TEXT_PICKER_VALUE) {
             holder as RecyclerViewHolderTextPicker
-            val prefTextValue = sharedPreferences.getString(prefValueKey, "ANY")
+            val prefTextValue = sharedPreferences.getString(prefValueKey, "Any")
 
             // Set initial values
-            holder.settingsItemTitle.text = dataProvider.text
+            holder.settingsItemTitle.text = dataProvider.title
             holder.textPickerValue.text = prefTextValue
             holder.settingsItemTextPicker.isVisible = true
 
@@ -79,14 +82,14 @@ class SettingsAdapter(
 
             }
 
-        } else {
+        } else if (holder.itemViewType == NUM_PICKER_VALUE) {
             holder as RecyclerViewHolderNumPicker
             val prefToggleKey: String = prefValueKey + "_TOGGLE"
             val prefNumValue = sharedPreferences.getInt(prefValueKey, 0)
             val prefToggleValue = sharedPreferences.getBoolean(prefToggleKey, false)
 
             // Set initial values
-            holder.settingsItemTitle.text = dataProvider.text
+            holder.settingsItemTitle.text = dataProvider.title
             holder.numPickerNum.text = prefNumValue.toString()
             holder.settingsItemSwitch.isChecked = prefToggleValue
             holder.settingsItemNumPicker.isVisible = prefToggleValue
@@ -105,11 +108,13 @@ class SettingsAdapter(
             }
 
             holder.numPickerDecrease.setOnClickListener {
-                sharedPreferences.edit().putInt(prefValueKey, newNum(false, holder.numPickerNum.toString().toInt()))
+                sharedPreferences.edit()
+                    .putInt(prefValueKey, newNum(false, holder.numPickerNum.toString().toInt()))
                     .apply()
             }
             holder.numPickerIncrease.setOnClickListener {
-                sharedPreferences.edit().putInt(prefValueKey, newNum(true, holder.numPickerNum.toString().toInt()))
+                sharedPreferences.edit()
+                    .putInt(prefValueKey, newNum(true, holder.numPickerNum.toString().toInt()))
                     .apply()
             }
         }
@@ -123,7 +128,7 @@ class SettingsAdapter(
         return newNum
     }
 
-    private fun newText(increase: Boolean, values: ArrayList<String>, currentIndex: Int) : String {
+    private fun newText(increase: Boolean, values: ArrayList<String>, currentIndex: Int): String {
         return "";
     }
 
@@ -179,6 +184,9 @@ class SettingsAdapter(
 }
 
 /**
- * @param text The settings item description
+ * @param title The settings item description
  */
-class SettingsItem(val text: String)
+class SettingsItem(val title: String)
+
+val NUM_PICKER_VALUE = 0x00
+val TEXT_PICKER_VALUE = 0x01
